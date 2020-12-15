@@ -1,0 +1,26 @@
+menu "IOWA sample config"
+    config IOWA_SAMPLE_NAME
+        string "Object sample name"
+        default "IOWA_sample_client"
+        help
+            Object name
+
+    config IOWA_SERVER_URI
+        string "LwM2M server URI"
+        default "coap://iowa-server.ioterop.com"
+        help
+            The remote server (CONNECTicut, ALASKA, or custom)
+
+    config IOWA_SAMPLE_SERVER_SHORT_ID
+        int "Server Short ID"
+        range 1 65535
+        default 1234
+        help
+            See IOWA specifications
+    config IOWA_SAMPLE_LIFETIME
+        int "Server Lifetime"
+        range 1 255
+        default 50
+        help
+            See IOWA specifications
+endmenu

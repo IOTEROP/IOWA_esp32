@@ -1,0 +1,163 @@
+menu "Iowa Evaluation version"
+    comment "IOWA for Kconfig beta version - Work In Progress"
+    comment "WARNING: (Evaluation version) full IOWA support disabled"
+    CONFIG_FULL_IOWA_VERSION=n
+
+    choice IOWA_SUPPORT
+        prompt "IOWA Transport"
+            default IOWA_UDP_SUPPORT
+            help
+                Support of transports
+        config IOWA_UDP_SUPPORT
+            bool "UDP support"
+        config IOWA_TCP_SUPPORT
+            depends on CONFIG_FULL_IOWA_VERSION
+            bool "TCP  support"
+        config IOWA_LORAWAN_SUPPORT
+            depends on CONFIG_FULL_IOWA_VERSION
+            bool "LoRaWan stack"
+        config IOWA_SMS_SUPPORT
+            depends on CONFIG_FULL_IOWA_VERSION
+            bool "SMS support"
+    endchoice
+
+    choice IOWA_SECURITY_LAYER
+        depends on CONFIG_FULL_IOWA_VERSION
+        prompt "IOWA Security layer"
+            default IOWA_SECURITY_LAYER_NONE
+            help
+                To choose the security layer to use
+        config IOWA_SECURITY_LAYER_NONE
+            bool "No security layer"
+        config IOWA_SECURITY_LAYER_USER
+            bool "IOWA_SECURITY_LAYER_USER"
+        config IOWA_SECURITY_LAYER_MBEDTLS
+            bool "IOWA_SECURITY_LAYER_MBEDTLS"
+        config SECURITY_LAYER_MBEDTLS_PSK_ONLY
+            bool "SECURITY_LAYER_MBEDTLS_PSK_ONLY"
+        config IOWA_SECURITY_LAYER_TINYDTLS
+            bool "IOWA_SECURITY_LAYER_TINYDTLS"
+    endchoice
+
+    config IOWA_THREAD_SUPPORT
+        depends on CONFIG_FULL_IOWA_VERSION
+        bool "Multi threaded environment"
+        default n
+        help
+            To use IOWA in a multi threaded environment
+
+    config IOWA_STORAGE_CONTEXT_SUPPORT
+        depends on CONFIG_FULL_IOWA_VERSION
+        bool "Enable context saving and loading"
+        default n
+        help
+            To enable context saving and loading
+
+    config IOWA_STORAGE_CONTEXT_AUTOMATIC_BACKUP
+        depends on IOWA_STORAGE_CONTEXT_SUPPORT
+        bool "Enable automatic context saving after bootstrap"
+        default n
+        help
+            Enable automatic context saving after bootstrap
+
+    config IOWA_LOGGER_USER
+        depends on CONFIG_FULL_IOWA_VERSION
+        bool "Activate implement the Logger's functions"
+        default n
+        help
+            Activate implement the Logger's functions
+
+    choice IOWA_LOG_LEVEL
+        prompt "IOWA Log levels"
+            default IOWA_LOG_LEVEL_NONE
+            help
+            Logs by level and components
+        config IOWA_LOG_LEVEL_NONE
+            bool "No logs"
+        config IOWA_LOG_LEVEL_ERROR
+            bool "IOWA_LOG_LEVEL_ERROR"
+
+        config IOWA_LOG_LEVEL_WARNING
+            bool "IOWA_LOG_LEVEL_WARNING"
+        config IOWA_LOG_LEVEL_INFO
+            bool "IOWA_LOG_LEVEL_INFO"
+        config IOWA_LOG_LEVEL_TRACE
+            bool "IOWA_LOG_LEVEL_TRACE"
+    endchoice
+
+    choice IOWA_LOG_PART
+        prompt "IOWA Log components"
+            default IOWA_PART_ALL
+            help
+            Logs by level and components
+        config IOWA_PART_ALL
+            bool "All components"
+        config IOWA_PART_BASE
+            bool "IOWA_PART_BASE"
+        config IOWA_PART_COAP
+            bool "IOWA_PART_COAP"
+        config IOWA_PART_COMM
+            bool "IOWA_PART_COMM"
+        config IOWA_PART_DATA
+            bool "IOWA_PART_DATA"
+        config IOWA_PART_LWM2M
+            bool "IOWA_PART_LWM2M"
+        config IOWA_PART_OBJECT
+            bool "IOWA_PART_OBJECT"
+        config IOWA_PART_SECURITY
+            bool "IOWA_PART_SECURITY"
+        config IOWA_PART_SYSTEM
+            bool "IOWA_PART_SYSTEM"
+    endchoice
+
+    choice IOWA_MODE
+        prompt "IOWA Lwm2m mode"
+            default LWM2M_CLIENT_MODE
+            help
+            To specify the LWM2M role of your device.
+            Several of them can be defined at the same timeLogs by leel and components
+        config LWM2M_CLIENT_MODE
+            bool "LWM2M_CLIENT_MODE"
+        config LWM2M_SERVER_MODE
+            depends on CONFIG_FULL_IOWA_VERSION
+            bool "LWM2M_SERVER_MODE"
+        config LWM2M_BOOTSTRAP_SERVER_MODE
+            depends on CONFIG_FULL_IOWA_VERSION
+            bool "LWM2M_BOOTSTRAP_SERVER_MODE"
+    endchoice
+
+   config IOWA_BUFFER_SIZE
+        int "Static buffer size for datagram packets"
+        range 16 1024
+        default 512
+        help
+            To specify the size of the static buffer used
+            to received datagram packets.
+
+    choice IOWA_ENDIAN
+        prompt "IOWA Endianness"
+            default LWM2M_LITTLE_ENDIAN
+            help
+            To specify the endianness of your platform.
+            One and only one must be defined.
+        config LWM2M_LITTLE_ENDIAN
+            bool "LWM2M_LITTLE_ENDIAN"
+        config LWM2M_BIG_ENDIAN
+            bool "LWM2M_BIG_ENDIAN"
+    endchoice
+
+    choice IOWA_SUPPORT_OBJECT
+        depends on CONFIG_FULL_IOWA_VERSION
+        prompt "IOWA objects supported"
+            default IOWA_SUPPORT_FIRMWARE_UPDATE_OBJECT
+            help
+                OMA Support objects
+        config IOWA_SUPPORT_FIRMWARE_UPDATE_OBJECT
+            bool "OMA Firmware Update Object support"
+        config IOWA_SUPPORT_SOFTWARE_MANAGEMENT_OBJECT
+            bool "OMA Software Management Object support"
+        config IOWA_SUPPORT_SOFTWARE_COMPONENT_OBJECT
+            bool "OMA Software Component Object support"
+    endchoice
+
+endmenu
