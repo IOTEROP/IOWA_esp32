@@ -71,8 +71,8 @@ menu "Iowa Evaluation version"
         prompt "IOWA Lwm2m mode"
             default LWM2M_CLIENT_MODE
             help
-            To specify the LWM2M role of your device.
-            Several of them can be defined at the same timeLogs by leel and components
+                To specify the LWM2M role of your device.
+                Several of them can be defined at the same timeLogs by leel and components
         config LWM2M_CLIENT_MODE
             bool "LWM2M_CLIENT_MODE"
         config LWM2M_SERVER_MODE
@@ -84,18 +84,20 @@ menu "Iowa Evaluation version"
     endchoice
 
     config IOWA_PART_ENABLE
+        depends on CONFIG_FULL_IOWA_VERSION
         bool "Enable default logging system"
         default y
         help
             Enable or disable logs output
 
     choice IOWA_LOG_LEVEL
-        depends on IOWA_PART_ENABLE
+        depends on CONFIG_FULL_IOWA_VERSION
         prompt "LOG: Select level"
-            default IOWA_LOG_LEVEL_INFO
+            default IOWA_LOG_LEVEL_NONE
             help
                 Logs by level and components
-
+        config IOWA_LOG_LEVEL_NONE
+            bool "IOWA_LOG_LEVEL_ALL"
         config IOWA_LOG_LEVEL_ERROR
             bool "IOWA_LOG_LEVEL_ERROR"
         config IOWA_LOG_LEVEL_WARNING
@@ -106,31 +108,39 @@ menu "Iowa Evaluation version"
             bool "IOWA_LOG_LEVEL_TRACE"
     endchoice
 
-    choice IOWA_LOG_PART
-            depends on IOWA_PART_ENABLE
-        prompt "LOG: Select component"
-            default IOWA_PART_ALL
-            help
-            Logs by level and components
-        config IOWA_PART_ALL
-            bool "All components"
+    menu "Debug output: Select components to log"
         config IOWA_PART_BASE
+            default y
             bool "IOWA_PART_BASE"
+
         config IOWA_PART_COAP
+            default y
             bool "IOWA_PART_COAP"
+
         config IOWA_PART_COMM
+            default y
             bool "IOWA_PART_COMM"
+
         config IOWA_PART_DATA
+            default y
             bool "IOWA_PART_DATA"
+
         config IOWA_PART_LWM2M
+            default y
             bool "IOWA_PART_LWM2M"
+
         config IOWA_PART_OBJECT
+            default y
             bool "IOWA_PART_OBJECT"
+
         config IOWA_PART_SECURITY
+            default y
             bool "IOWA_PART_SECURITY"
+
         config IOWA_PART_SYSTEM
+            default y
             bool "IOWA_PART_SYSTEM"
-   endchoice
+   endmenu
 
 
 

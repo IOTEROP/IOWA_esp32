@@ -73,6 +73,7 @@
     #error "Missing transport"
 #endif
 
+
 /***********************************************
 * To enable logs
 * By level:
@@ -105,28 +106,68 @@
 *     - IOWA_PART_OBJECT
 *     - IOWA_PART_SECURITY
 *     - IOWA_PART_SYSTEM
+*  Attention: bitmask to enable componentS to log
 */
+#ifdef CONFIG_IOWA_PART_BASE
+	#define BASE_MASK	0xFF
+	#else
+	#define BASE_MASK	0x00
+#endif
 
-#ifndef CONFIG_IOWA_IOWA_PART_ENABLE
-    #define IOWA_LOG_PART 0
-#elif CONFIG_IOWA_PART_ALL
-	#define IOWA_LOG_PART IOWA_PART_ALL
-#elif CONFIG_IOWA_PART_BASE
-	#define IOWA_LOG_PART IOWA_PART_BASE
-#elif CONFIG_IOWA_PART_COAP
-	#define IOWA_LOG_PART IOWA_PART_COAP
-#elif CONFIG_IOWA_PART_COMM
-	#define IOWA_LOG_PART IOWA_PART_COMM
-#elif CONFIG_IOWA_PART_DATA
-	#define IOWA_LOG_PART IOWA_PART_DATA
-#elif CONFIG_IOWA_PART_LWM2M
-	#define IOWA_LOG_PART IOWA_PART_LWM2M
-#elif CONFIG_IOWA_PART_OBJECT
-	#define IOWA_LOG_PART IOWA_PART_OBJECT
-#elif CONFIG_IOWA_PART_SECURITY
-	#define IOWA_LOG_PART IOWA_PART_SECURITY
-#elif CONFIG_IOWA_PART_SYSTEM
-	#define IOWA_LOG_PART IOWA_PART_SYSTEM
+#ifdef CONFIG_IOWA_PART_COAP
+	#define COAP_MASK	0xFF
+#else
+	#define COAP_MASK	0x00
+#endif
+
+#ifdef CONFIG_IOWA_PART_COMM
+	#define COMM_MASK	0xFF
+#else
+	#define COMM_MASK	0x00
+#endif
+
+#ifdef CONFIG_IOWA_PART_DATA
+	#define DATA_MASK	0xFF
+#else
+	#define DATA_MASK	0x00
+#endif
+
+#ifdef CONFIG_IOWA_PART_LWM2M
+	#define LWM2M_MASK	0xFF
+#else
+	#define LWM2M_MASK	0x00
+#endif
+
+#ifdef CONFIG_IOWA_PART_OBJECT
+	#define OBJECT_MASK	0xFF
+#else
+	#define OBJECT_MASK	0x00
+#endif
+
+#ifdef CONFIG_IOWA_PART_SECURITY
+	#define SECURITY_MASK	0xFF
+#else
+	#define SECURITY_MASK	0x00
+#endif
+
+#ifdef CONFIG_IOWA_PART_SYSTEM
+	#define SYSTEM_MASK	0xFF
+#else
+	#define SYSTEM_MASK	0x00
+#endif
+
+#if (BASE_MASK && COAP_MASK && COMM_MASK && DATA_MASK && LWM2M_MASK && OBJECT_MASK && SECURITY_MASK && SYSTEM_MASK)
+	#define IOWA_LOG_PART IOWA_PART_ALL				// We want it ALL
+#else
+	#define IOWA_LOG_PART 	((IOWA_PART_BASE & BASE_MASK) \
+					  		 | (IOWA_PART_COAP & COAP_MASK) \
+							 | (IOWA_PART_COMM & COMM_MASK) \
+					  		 | (IOWA_PART_DATA & DATA_MASK) \
+					  		 | (IOWA_PART_LWM2M & LWM2M_MASK) \
+					  		 | (IOWA_PART_OBJECT & OBJECT_MASK) \
+					  		 | (IOWA_PART_SECURITY & SECURITY_MASK) \
+					  		 | (IOWA_PART_SYSTEM & SYSTEM_MASK) \
+							   )
 #endif
 
 
