@@ -1,0 +1,35 @@
+menu "IOWA ESP3202 sample config"
+    config IOWA_SAMPLE_NAME
+        string "Object dvice name"
+        default "IOWA_LED_client"
+        help
+            Object name
+
+    config IOWA_SERVER_URI
+        string "LwM2M server URI"
+        default "coap://iowa-server.ioterop.com"
+        help
+            The remote server (CONNECTicut, ALASKA, or custom)
+
+    config IOWA_SAMPLE_SERVER_SHORT_ID
+        int "Server Short ID"
+        range 1 65535
+        default 1234
+        help
+            Please refer to IOWA documentation
+
+    config IOWA_SAMPLE_LIFETIME
+        int "Server Lifetime"
+        range 1 255
+        default 50
+        help
+            Please refer to IOWA documentation
+
+    config LED_GPIO
+        int "LED GPIO number"
+        range 0 34
+        default 2
+        help
+            GPIO number (IOxx) to blink on and off. Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to blink.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+endmenu
