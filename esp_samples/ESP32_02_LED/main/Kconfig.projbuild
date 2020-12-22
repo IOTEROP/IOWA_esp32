@@ -1,6 +1,6 @@
 menu "IOWA ESP3202 sample config"
     config IOWA_SAMPLE_NAME
-        string "Object dvice name"
+        string "Object sample name"
         default "IOWA_LED_client"
         help
             Object name

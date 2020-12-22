@@ -17,14 +17,14 @@
  *
  **************************************************/
 
-// IOWA headers
+/* IOWA headers */
 #include "iowa_client.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// ESP32 specific
+/* ESP32 specific */
 #include <stdio.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -61,7 +61,7 @@ static const char *TAG = "IOWA_EXAMPLE_02";
 
 iowa_context_t g_iowaH;     /* global handle */
 
-// Global structure to store the values of the custom object
+/* Global structure to store the values of the custom object */
 typedef struct
 {
     bool state;
@@ -74,19 +74,21 @@ typedef struct
 */
 #define LED_GPIO CONFIG_LED_GPIO
 
-// LwM2M Server details, setup from menuconfig tool
-// Default values: see Kconfig.projbuild
-#define SERVER_SHORT_ID     CONFIG_IOWA_SAMPLE_SERVER_SHORT_ID  // 1234
-#define SERVER_LIFETIME     CONFIG_IOWA_SAMPLE_LIFETIME         // 50
-#define SERVER_URI          CONFIG_IOWA_SERVER_URI              // "coap://iowa-server.ioterop.com"
-#define OBJECT_NAME_PREFIX  CONFIG_IOWA_SAMPLE_NAME             //"IOWA_sample_client"
+/* LwM2M Server details, setup from menuconfig tool
+ * Default values: see Kconfig.projbuild
+ */
+#define SERVER_SHORT_ID     CONFIG_IOWA_SAMPLE_SERVER_SHORT_ID  /* 1234 */
+#define SERVER_LIFETIME     CONFIG_IOWA_SAMPLE_LIFETIME         /* 50 */
+#define SERVER_URI          CONFIG_IOWA_SERVER_URI              /* "coap://iowa-server.ioterop.com" */
+#define OBJECT_NAME_PREFIX  CONFIG_IOWA_SAMPLE_NAME             /* "IOWA_sample_client" */
 
 #define DEVICE_NAME_SIZE   64
 
-// As this sample does not use security, the LwM2M Server relies only
-// on the endpoint name to identify the LwM2M Client. Thus we need an
-// unique name.
-// This function generates one from your network MAC address on ESP32
+/* As this sample does not use security, the LwM2M Server relies only
+ * on the endpoint name to identify the LwM2M Client. Thus we need an
+ * unique name.
+ * This function generates one from your network MAC address on ESP32
+ */
 static void prv_generate_unique_name(char *name)
 {
     long id= 0;
@@ -133,22 +135,22 @@ iowa_status_t prv_LEDControlCallback(iowa_dm_operation_t operation,
         {
             switch (dataP[i].resourceID)
             {
-            case 5850:  // On/Off
+            case 5850:  /* On/Off */
                 dataP[i].value.asBoolean = objectValuesP->state;
                 break;
-            case 5852:  // On Time
+
+            case 5852:  /* On Time */
                 dataP[i].value.asInteger =  objectValuesP->onTime;
                 break;
 
             default:
-                // Already handled by IOWA stack
+                /* Already handled by IOWA stack */
                 break;
             }
         }
         break;
 
     case IOWA_DM_WRITE:
-        ESP_LOGI(TAG, "IOWA_DM_WRITE");
         for (i = 0; i < numData; i++)
         {
             switch (dataP[i].resourceID)
@@ -157,7 +159,7 @@ iowa_status_t prv_LEDControlCallback(iowa_dm_operation_t operation,
                 objectValuesP->state = dataP[i].value.asBoolean;
                 break;
 
-            case 5852: // On Time
+            case 5852: /* On Time */
                 if (dataP[i].value.asInteger != 0)
                 {
                     return IOWA_COAP_406_NOT_ACCEPTABLE;
@@ -166,14 +168,14 @@ iowa_status_t prv_LEDControlCallback(iowa_dm_operation_t operation,
                 objectValuesP->onTime = 0;
                 break;
             default:
-                // Already handled by IOWA stack
+                /* Already handled by IOWA stack */
                 break;
             }
         }
         break;
 
     default:
-        // Already handled by IOWA stack
+        /* Already handled by IOWA stack */
         break;
     }
 
@@ -237,7 +239,7 @@ int iowa_app_start(void)
 
     /* Create of a custom object. Actual values are stored in a custom_object_values_t structure */
     result = iowa_client_add_custom_object(g_iowaH,
-                                           3311,    //Light Control (http://www.openmobilealliance.org/wp/omna/lwm2m/lwm2mregistry.html)
+                                           3311,    /* Light Control (http://www.openmobilealliance.org/wp/omna/lwm2m/lwm2mregistry.html)*/
                                            1, singleInstanceId,
                                            2, resources,
                                            prv_LEDControlCallback, NULL, NULL,
@@ -298,7 +300,7 @@ void iowa_system_reboot(void *userData)
     /* delay 1 second before the restart */
     vTaskDelay(1000 / portTICK_PERIOD_MS);
     ESP_LOGI(TAG, "Restart the device....");
-    esp_restart(); //Bye
+    esp_restart();  /* Bye */
 }
 
 /*---------------------------------------------------------
