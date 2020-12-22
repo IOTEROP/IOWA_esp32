@@ -24,16 +24,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#include <Winsock2.h>
-#include <ws2tcpip.h>
-#else
 #include <unistd.h>
 #include <netdb.h>
 #include <errno.h>
-#endif
 
 // For POSIX platforms, we use BSD sockets.
 typedef struct
@@ -48,9 +41,6 @@ void * iowa_system_connection_open(iowa_connection_type_t type,
                                    char *port,
                                    void *userData)
 {
-#ifdef _WIN32
-    struct WSAData wd;
-#endif
     struct addrinfo hints;
     struct addrinfo *servinfo = NULL;
     struct addrinfo *p;
@@ -92,11 +82,7 @@ void * iowa_system_connection_open(iowa_connection_type_t type,
         {
             if (-1 == connect(s, p->ai_addr, p->ai_addrlen))
             {
-#ifdef _WIN32
-                closesocket(s);
-#else
                 close(s);
-#endif
                 s = -1;
             }
         }
@@ -116,17 +102,13 @@ void * iowa_system_connection_open(iowa_connection_type_t type,
     connectionP = (sample_connection_t *)malloc(sizeof(sample_connection_t));
     if (connectionP == NULL)
     {
-#ifdef _WIN32
-        closesocket(s);
-#else
         close(s);
-#endif
     }
     else
     {
         connectionP->sock = s;
     }
-    
+
 
     return connectionP;
 }
@@ -163,13 +145,6 @@ int iowa_system_connection_recv(void *connP,
     connectionP = (sample_connection_t *)connP;
 
     numBytes = recv(connectionP->sock, buffer, length, 0);
-#ifdef _WIN32
-    if (numBytes == -1
-        && WSAGetLastError() == WSAEMSGSIZE)
-    {
-        numBytes = length;
-    }
-#endif
 
     return numBytes;
 }
@@ -183,11 +158,7 @@ void iowa_system_connection_close(void *connP,
 
     connectionP = (sample_connection_t *)connP;
 
-#ifdef _WIN32
-    closesocket(connectionP->sock);
-#else
     close(connectionP->sock);
-#endif
 
     free(connectionP);
 }
@@ -203,8 +174,7 @@ int iowa_system_connection_select(void **connArray,
     size_t i;
     int result;
     int maxFd;
-    int fd;
-
+ 
     tv.tv_sec = timeout;
     tv.tv_usec = 0;
 

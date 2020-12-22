@@ -23,11 +23,9 @@
 // Platform specific headers
 #include <stdio.h>
 #include <stdlib.h>
-#ifdef _WIN32
-#include <Windows.h>
-#else
 #include <time.h>
-#endif
+
+#include "esp_log.h"
 
 // We bind this function directly to malloc().
 void * iowa_system_malloc(size_t size)
@@ -44,25 +42,21 @@ void iowa_system_free(void *pointer)
 // We return the number of seconds since Epoch.
 int32_t iowa_system_gettime(void)
 {
-#ifdef _WIN32
-    return (int32_t)(GetTickCount() / 1000);
-#else
     return (int32_t)time(NULL);
-#endif
 }
 
 
+#ifdef MOVED_CODE
 /* This function is moved to main.c
- * for convenient reasons
- *
-// We fake a reboot by exiting the application.
+ * for convenient reasons (unregister IOWA)
+ */
 void iowa_system_reboot(void *userData)
 {
     (void)userData;
-    fprintf(stdout, "\n\tFaking a reboot.\r\n\n");
+    ESP_LOGD(TAG, "\tFaking a reboot.");
     exit(0);
 }
-*/
+#endif
 
 // Traces are output on stderr.
 void iowa_system_trace(const char *format,
