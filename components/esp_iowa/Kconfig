@@ -1,7 +1,11 @@
-menu "Iowa Evaluation version"
-    comment "IOWA for Kconfig beta version - Work In Progress"
+menu "IOWA LwM2M stack"
+    comment "IOWA for Kconfig BETA version "
+    config CONFIG_FULL_IOWA_VERSION
+        bool
+        default N
+
     comment "WARNING: (Evaluation version) full IOWA support disabled"
-    CONFIG_FULL_IOWA_VERSION=n
+        depends on !CONFIG_FULL_IOWA_VERSION
 
     choice IOWA_SUPPORT
         prompt "IOWA Transport"
@@ -166,7 +170,7 @@ menu "Iowa Evaluation version"
 
     choice IOWA_SUPPORT_OBJECT
         depends on CONFIG_FULL_IOWA_VERSION
-        prompt "IOWA objects supported"
+        prompt "specific IOWA objects supported"
             default IOWA_SUPPORT_FIRMWARE_UPDATE_OBJECT
             help
                 OMA Support objects

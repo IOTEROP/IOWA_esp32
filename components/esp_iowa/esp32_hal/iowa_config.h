@@ -189,4 +189,19 @@
     #error "No LWM2M role specified"
 #endif
 
+
+#ifdef CONFIG_IOWA_SUPPORT_FIRMWARE_UPDATE_OBJECT
+	#define IOWA_SUPPORT_FIRMWARE_UPDATE_OBJECT
+#endif
+
+/* "OMA Software Management Object support" */
+#ifdef CONFIG_IOWA_SUPPORT_SOFTWARE_MANAGEMENT_OBJECT
+	#define IOWA_SUPPORT_SOFTWARE_MANAGEMENT_OBJECT
+#endif
+
+/* "OMA Software Component Object support" */
+#ifdef CONFIG_IOWA_SUPPORT_SOFTWARE_COMPONENT_OBJECT
+define IOWA_SUPPORT_SOFTWARE_COMPONENT_OBJECT
+#endif
+
 #endif
