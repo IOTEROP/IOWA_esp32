@@ -28,3 +28,11 @@ Please note: **Neither the SDK nor the samples are open source software but comm
       The default name is _IOWA_Sample_client_ and the URI server points to our _CONNECTicut_ test server [CONNECTicut web page](https://iowa-server.ioterop.com)
 5. Now you can build, flash and test your code with the usual command:
    `idf.py build flash monitor`
+
+# Tutorials
+
+You can find some interesting tutorials on [Hackster.io](https://www.hackster.io/)
+
+- [Device management with LwM2M IOWA stack - Tutorial 1](https://www.hackster.io/ioterop/device-management-with-lwm2m-iowa-stack-tutorial-1-e5aaf8)
+
+- [Device management with LwM2M IOWA stack #2: ESP32](https://www.hackster.io/ioterop/device-management-with-lwm2m-iowa-stack-2-esp32-fcb294)
