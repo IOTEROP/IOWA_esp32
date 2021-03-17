@@ -4,9 +4,21 @@
 
 # IOWA samples for ESP32
 
-This repository contains some IOWA samples ported to the ESP32 family. It is based on the ESP-IDF version 4.1 ([Espressif IoT Development Framework] `https://docs.espressif.com/projects/esp-idf/en/latest/esp32/`)
+This repository contains some IOWA samples ported to the ESP32 family. Two flavors...two folders !
 
-Some of these samples can be build and tested with the [IOWA public code] `https://github.com/IOTEROP/IOWA`.
+## PlatfomIO
+
+For the users of the famous [PlatformIO](https://platformio.org/), you can find a working example under the ./PlatformIO folder. You just have to open the project under VSCode PlatformIO.
+Keep in mind that you to use *menuconfig* under the terminal with the following command:
+`pio run -t menuconfig`
+(Note: if you are not able to use the arrow to move through menuconfig, you can use K and J keys...it helps - PlatformIO issue)
+
+
+## ESP_IDF framework
+
+It is based on the ESP-IDF version 4.1 ([Espressif IoT Development Framework](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/))
+
+Some of these samples can be build and tested with the [IOWA public code](https://github.com/IOTEROP/IOWA) [`https://github.com/IOTEROP/IOWA](https://github.com/IOTEROP/IOWA).
 If exist, to build the _Advanced Samples_ (e.g: Firmware update), you need the *Full SDK* (please contact us at [https://ioterop.com/iowa/](https://ioterop.com/iowa/)).
 
 Please note: **Neither the SDK nor the samples are open source software but commercial software.** and this code *should not* be used in a commercial product and is for personal evaluation ONLY !
